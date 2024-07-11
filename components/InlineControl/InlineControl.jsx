@@ -4,16 +4,26 @@ import {
   TextInput,
   LabelContainer,
 } from "./InlineControl.styles";
-import { useState } from "react";
+import { useState, memo } from "react";
 
-function InlineControl({ width, customStyle, label1, label2, label3 }) {
+function InlineControl({
+  width,
+  customStyle,
+  label1,
+  label2,
+  label3,
+  onSelect,
+}) {
+  console.log("RENDER InlineControl");
   const [visible, setVisible] = useState(false);
   const [value, setValue] = useState("");
 
   const handleVisible = () => {
-    setVisible(!visible);
+    onSelect();
+    //setVisible(!visible);
   };
   const handleValue = (text) => {
+    console.log("handleValue");
     setValue(text);
   };
 
@@ -37,5 +47,5 @@ function InlineControl({ width, customStyle, label1, label2, label3 }) {
     </MainContainer>
   );
 }
-
-export default InlineControl;
+const areEqual = (prevProps, nextProps) => true;
+export default memo(InlineControl, areEqual);

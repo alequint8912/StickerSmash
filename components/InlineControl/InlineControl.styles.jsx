@@ -33,15 +33,14 @@ export const TextInput = ({
   customStyle,
 }) => (
   <>
-    <Pressable
-      onPress={() => {
-        handleVisible();
-      }}
-      style={{ ...(customStyle?.container ?? {}) }}
-    >
+    <View style={{ ...(customStyle?.container ?? {}) }}>
       <RNTextInput
         value={value}
-        editable={false}
+        // editable={false}
+        onPress={() => {
+          handleVisible();
+        }}
+        onChange={handleValue}
         style={{
           ...styles.textInput,
           ...(customStyle?.textInput ?? {}),
@@ -50,7 +49,7 @@ export const TextInput = ({
           //   : { ...styles.textInputVariantB }),
         }}
       />
-    </Pressable>
+    </View>
     <InputModal
       visible={visible}
       closeModal={handleVisible}

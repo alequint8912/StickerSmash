@@ -1,34 +1,85 @@
 import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput as RNTextInput,
-  ScrollView,
-  TouchableOpacity,
-  Image,
   Pressable,
+  TextInput as RNTextInput,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
-import Animated, {
-  BounceInDown,
-  BounceOutDown,
-  FadeIn,
-  FadeInDown,
-  FadeInUp,
-  FadeOut,
-  FadeOutDown,
-  Layout,
-  SlideOutUp,
-  ZoomInEasyDown,
-  ZoomOutEasyDown,
-} from "react-native-reanimated";
 import InputModal from "../InputModal/InputModal";
+
+export const MainContainer = ({ children, variant, customStyles }) => (
+  <View
+    style={{
+      ...styles.mainContainer,
+      ...stylesByVariant["mainContainer"][variant],
+      // ...(variant === "A"
+      //   ? { ...styles.mainContainerVariantA }
+      //   : { ...styles.mainContainerVariantB }),
+      ...customStyles,
+    }}
+  >
+    {children}
+  </View>
+);
+
+export const InputLabel = ({ children, variant = "A" }) => (
+  <Text
+    style={{
+      ...styles.label,
+      ...stylesByVariant["label"][variant],
+      //...(variant === "A" ? { ...styles.labelVarA } : { ...styles.labelVarB }),
+    }}
+  >
+    {children}
+  </Text>
+);
+
+export const TextInputContainer = ({ children }) => (
+  <View style={styles.textInputContainer}>{children}</View>
+);
+
+export const TextInput = ({
+  value,
+  handleValue,
+  visible,
+  handleVisible,
+  variant = "A",
+  customStyle,
+}) => (
+  <>
+    {/* <Pressable
+      onPress={() => {
+        handleVisible();
+      }}
+      style={{ flex: 1 }}
+    > */}
+    <RNTextInput
+      value={value}
+      onPress={handleVisible}
+      onChange={handleValue}
+      //editable={false}
+      style={{
+        ...styles.textInput,
+        ...stylesByVariant["textInput"][variant],
+        // ...(variant === "A"
+        //   ? { ...styles.textInputVariantA }
+        //   : { ...styles.textInputVariantB }),
+      }}
+    />
+    {/* </Pressable> */}
+    <InputModal
+      visible={visible}
+      closeModal={handleVisible}
+      value={value}
+      handleChange={handleValue}
+    />
+  </>
+);
 
 const styles = StyleSheet.create({
   mainContainer: {
     display: "flex",
     flexDirection: "column",
-
-    //flex: 1,
   },
   mainContainerVariantA: {
     borderWidth: 1,
@@ -87,6 +138,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     paddingHorizontal: 5,
     paddingVertical: 0,
+    flex: 1,
   },
   textInputVariantA: {
     backgroundColor: "#dfdbdb91",
@@ -119,70 +171,3 @@ const stylesByVariant = {
     C: styles.textInputVariantC,
   },
 };
-
-export const MainContainer = ({ children, variant, customStyles }) => (
-  <View
-    style={{
-      ...styles.mainContainer,
-      ...stylesByVariant["mainContainer"][variant],
-      // ...(variant === "A"
-      //   ? { ...styles.mainContainerVariantA }
-      //   : { ...styles.mainContainerVariantB }),
-      ...customStyles,
-    }}
-  >
-    {children}
-  </View>
-);
-
-export const InputLabel = ({ children, variant = "A" }) => (
-  <Text
-    style={{
-      ...styles.label,
-      ...stylesByVariant["label"][variant],
-      //...(variant === "A" ? { ...styles.labelVarA } : { ...styles.labelVarB }),
-    }}
-  >
-    {children}
-  </Text>
-);
-
-export const TextInputContainer = ({ children }) => (
-  <View style={styles.textInputContainer}>{children}</View>
-);
-
-export const TextInput = ({
-  value,
-  handleValue,
-  visible,
-  handleVisible,
-  variant = "A",
-  customStyle,
-}) => (
-  <>
-    <Pressable
-      onPress={() => {
-        handleVisible();
-      }}
-      style={{ flex: 1 }}
-    >
-      <RNTextInput
-        value={value}
-        editable={false}
-        style={{
-          ...styles.textInput,
-          ...stylesByVariant["textInput"][variant],
-          // ...(variant === "A"
-          //   ? { ...styles.textInputVariantA }
-          //   : { ...styles.textInputVariantB }),
-        }}
-      />
-    </Pressable>
-    <InputModal
-      visible={visible}
-      closeModal={handleVisible}
-      value={value}
-      handleChange={handleValue}
-    />
-  </>
-);

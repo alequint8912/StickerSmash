@@ -1,19 +1,26 @@
-import InputModal from "../InputModal/InputModal";
 import { useState } from "react";
-import { StyleSheet, Pressable, Text, View } from "react-native";
 import {
-  MainContainer,
   InputLabel,
+  MainContainer,
   TextInput,
   TextInputContainer,
 } from "./ModalControl.styles";
+import { memo } from "react";
 
-const ModalControl = ({ variant, label1, label2, label3, customStyles }) => {
+const ModalControl = ({
+  variant,
+  label1,
+  label2,
+  label3,
+  customStyles,
+  onSelect,
+}) => {
   const [visible, setVisible] = useState(false);
   const [value, setValue] = useState("");
 
   const handleVisible = () => {
-    setVisible(!visible);
+    onSelect();
+    //setVisible(!visible);
   };
   const handleValue = (text) => {
     setValue(text);
@@ -39,5 +46,5 @@ const ModalControl = ({ variant, label1, label2, label3, customStyles }) => {
     </>
   );
 };
-
-export default ModalControl;
+const areEqual = (prevProps, nextProps) => true;
+export default memo(ModalControl);
