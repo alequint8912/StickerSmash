@@ -3,7 +3,6 @@ import { View, Image, StyleSheet } from "react-native";
 const PlaceholderImage = require("../assets/images/background-image.png");
 
 const ImageViewer = ({ photoUri }) => {
-  console.log("URI: ", photoUri);
   return (
     <View style={styles.imageContainer}>
       <Image
